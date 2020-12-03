@@ -1,12 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import { FFmpegProvider } from "./context/FFmpegContext";
+import App from "./views/App";
+import "./css/mvp.css";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <FFmpegProvider>
+      <App />
+    </FFmpegProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
