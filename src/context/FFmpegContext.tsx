@@ -8,6 +8,7 @@ type ComponentProps = {
 };
 type FFmpegData = {
   ready: boolean;
+  processing: boolean;
   setVideo: any;
   video: Buffer | File | null;
   handleConvert: () => void;
@@ -26,6 +27,7 @@ export function useFFmpeg() {
 
 export function FFmpegProvider({ children }: ComponentProps) {
   const [ready, setReady] = useState<boolean>(false);
+  const [processing, setProcessing] = useState<boolean>(false);
   const [video, setVideo] = useState<Buffer | File | null>(null);
   const [outputFile, setOutput] = useState<string>("");
   const [currentProgress, setCurrentProgress] = useState<number>(0);
@@ -44,11 +46,13 @@ export function FFmpegProvider({ children }: ComponentProps) {
   }, []);
 
   const handleConvert = async () => {
+    setProcessing(true);
     ffpmeg.FS("writeFile", "test.mp4", await fetchFile(video as Buffer));
     await ffpmeg.run(...mp4Container);
     const data = ffpmeg.FS("readFile", "out.mp4");
     const url = URL.createObjectURL(new Blob([data.buffer], { type: "video/mp4" }));
     setOutput(url);
+    setProcessing(false);
   };
 
   const handleCancel = () => {
@@ -74,6 +78,7 @@ export function FFmpegProvider({ children }: ComponentProps) {
     currentProgress,
     handleCancel,
     handleDownload,
+    processing,
   };
 
   return <FFmpegContext.Provider value={value}>{children}</FFmpegContext.Provider>;

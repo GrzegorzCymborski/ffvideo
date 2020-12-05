@@ -1,12 +1,13 @@
 import React from "react";
 import { useFFmpeg } from "../context/FFmpegContext";
-import ProgressNumber from "../components/ProgressNumber";
+// import ProgressNumber from "../components/ProgressNumber";
 import VideoPlayer from "../components/VideoPlayer";
 import InputVideo from "../components/InputVideo";
 import MainWrapper from "../components/MainWrapper";
 import Loading from "../components/Loading";
 import Button from "../components/Button";
 import buttonTypes from "../utils/buttonTypes";
+import ProcessingInfo from "../components/ProcessingInfo";
 
 const App = () => {
   const {
@@ -17,19 +18,22 @@ const App = () => {
     currentProgress,
     handleCancel,
     handleDownload,
+    processing,
   } = useFFmpeg();
 
   const mainVideoLoaded = !outputFile && currentProgress === 0;
+
+  console.log(processing);
 
   return (
     <MainWrapper>
       {ready ? (
         <>
-          {video && !outputFile && <VideoPlayer src={URL.createObjectURL(video)} />}
-
+          {video && !outputFile && !processing && <VideoPlayer src={URL.createObjectURL(video)} />}
+          {processing && <ProcessingInfo />}
           {!video && <InputVideo />}
 
-          {currentProgress > 1 && <ProgressNumber progress={currentProgress} />}
+          {/* {currentProgress > 1 && <ProgressNumber progress={currentProgress} />} */}
 
           {video && (
             <>

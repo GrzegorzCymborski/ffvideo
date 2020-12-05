@@ -7,8 +7,22 @@ type ComponentProps = {
 
 const mainWrapper = ({ children }: ComponentProps) => {
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <img src={logo} alt="main logo"/>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        maxWidth: "1024px",
+        margin: "0 auto",
+      }}
+    >
+      <img
+        src={logo}
+        alt="main logo"
+        style={{
+          marginBottom: "20px",
+        }}
+      />
       {children}
     </div>
   );

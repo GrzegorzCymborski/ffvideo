@@ -27,7 +27,7 @@ const Button = ({ action, type }: ComponentProps) => {
       break;
   }
 
-  return <img src={btnType} onClick={action} />;
+  return <img style={{ cursor: "pointer" }} src={btnType} onClick={action} />;
 };
 
 export default Button;
