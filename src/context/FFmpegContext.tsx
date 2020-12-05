@@ -47,14 +47,13 @@ export function FFmpegProvider({ children }: ComponentProps) {
     ffpmeg.FS("writeFile", "test.mp4", await fetchFile(video as Buffer));
     await ffpmeg.run(...mp4Container);
     const data = ffpmeg.FS("readFile", "out.mp4");
-    const url = URL.createObjectURL(
-      new Blob([data.buffer], { type: "video/mp4" })
-    );
+    const url = URL.createObjectURL(new Blob([data.buffer], { type: "video/mp4" }));
     setOutput(url);
   };
 
   const handleCancel = () => {
     setVideo(null);
+    setOutput("");
     setCurrentProgress(0);
   };
 
@@ -77,7 +76,5 @@ export function FFmpegProvider({ children }: ComponentProps) {
     handleDownload,
   };
 
-  return (
-    <FFmpegContext.Provider value={value}>{children}</FFmpegContext.Provider>
-  );
+  return <FFmpegContext.Provider value={value}>{children}</FFmpegContext.Provider>;
 }
