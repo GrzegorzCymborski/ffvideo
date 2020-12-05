@@ -4,6 +4,8 @@ import ProgressNumber from "../components/ProgressNumber";
 import VideoPlayer from "../components/VideoPlayer";
 import InputVideo from "../components/InputVideo";
 import MainWrapper from "../components/MainWrapper";
+import Loading from "../components/Loading";
+import Button from "../components/Button";
 
 const App = () => {
   const {
@@ -16,37 +18,36 @@ const App = () => {
     handleDownload,
   } = useFFmpeg();
 
+  const mainVideoLoaded = !outputFile && currentProgress === 0;
+
   return (
     <MainWrapper>
       {ready ? (
         <>
-          {video && !outputFile && (
-            <VideoPlayer src={URL.createObjectURL(video)} />
-          )}
+          {video && !outputFile && <VideoPlayer src={URL.createObjectURL(video)} />}
+
           {!video && <InputVideo />}
+
           {currentProgress > 1 && <ProgressNumber progress={currentProgress} />}
+        
           {video && (
             <>
               <div>
-                {!outputFile && currentProgress === 0 && (
-                  <button onClick={handleConvert}>Convert</button>
-                )}
-                {!outputFile && currentProgress === 0 && (
-                  <button onClick={handleCancel}>Cancel</button>
-                )}
+                {mainVideoLoaded && <Button action={handleConvert} text="Convert" />}
+                {mainVideoLoaded && <Button action={handleCancel} text="Cancel" />}
               </div>
+
               {outputFile && <VideoPlayer src={outputFile} />}
+
               <div>
-                {outputFile && (
-                  <button onClick={handleDownload}>Download</button>
-                )}
-                {outputFile && <button onClick={handleCancel}>Cancel</button>}
+                {outputFile && <Button action={handleDownload} text="Download" />}
+                {outputFile && <Button action={handleCancel} text="Cancel" />}
               </div>
             </>
           )}
         </>
       ) : (
-        <h1>Loading...</h1>
+        <Loading />
       )}
     </MainWrapper>
   );
