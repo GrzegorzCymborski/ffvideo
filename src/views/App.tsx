@@ -1,6 +1,5 @@
 import React from "react";
 import { useFFmpeg } from "../context/FFmpegContext";
-// import ProgressNumber from "../components/ProgressNumber";
 import VideoPlayer from "../components/VideoPlayer";
 import InputVideo from "../components/InputVideo";
 import MainWrapper from "../components/MainWrapper";
@@ -23,8 +22,6 @@ const App = () => {
 
   const mainVideoLoaded = !outputFile && currentProgress === 0;
 
-  console.log(processing);
-
   return (
     <MainWrapper>
       {ready ? (
@@ -33,9 +30,8 @@ const App = () => {
           {processing && <ProcessingInfo />}
           {!video && <InputVideo />}
 
-          {/* {currentProgress > 1 && <ProgressNumber progress={currentProgress} />} */}
 
-          {video && (
+          {video && !processing && (
             <>
               <div>
                 {mainVideoLoaded && <Button action={handleConvert} type={buttonTypes.CONVERT} />}

@@ -19,7 +19,7 @@ type FFmpegData = {
 };
 
 const FFmpegContext = React.createContext<Nil<FFmpegData>>(null);
-const ffpmeg = createFFmpeg({ log: true });
+const ffpmeg = createFFmpeg({ log: false });
 
 export function useFFmpeg() {
   return useContext(FFmpegContext) as FFmpegData;
