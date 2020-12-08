@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 type ComponentProps = {
   src: string;
 };
 
 const VideoPlayer = ({ src }: ComponentProps) => {
-  useEffect(() => console.log("leci rerender"),[]);
-
   return <video controls src={src} style={{ height: "300px" }} />;
 };
 
